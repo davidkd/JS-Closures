@@ -105,11 +105,19 @@ the module pattern to achieve this. */
 function counterFactory(value) {
 
   // Code here.
+  var currentValue = value;
 
-
-  return {
+    return {
+    	inc: function(){
+    		return currentValue += 1;
+    	},
+    	dec: function(){
+    		return currentValue  -= 1;
+    	}
+    };
   }
-}
+
+
 
 
 counter = counterFactory(10);
@@ -135,11 +143,13 @@ function motivation(firstname, lastname){
 
   var welcomeText = 'You\'re doing awesome, keep it up ';
 
-  // code message function here.
-
+ // code message function here.
+ var message = function(){
+   return welcomeText += firstname + " " + lastname + ".";
+};
 
   //Uncommment this to return the value of your invoked message function
-  //return message();
+  return message();
 
 }
 
@@ -178,13 +188,15 @@ var module = (function() {
 	// outside our lexical scope
 
   return {
-    // Code here.
-  };
+     publicMethod: function(){
+       return privateMethod();
+    }// Code here.
+  }
 
 })();
 
 // Uncomment this after you create your public method
-//   module.publicMethod();
+  module.publicMethod();
 
 
 
@@ -207,13 +219,13 @@ then 3, etc). Run this code in your console to see what the output is. */
 // To make this code work you will need to create a new scope for every iteration.
 function timeOutCounter() {
   for (var i = 0; i <= 5; i++) {
-    setTimeout(function() {
-      console.log(i);
-    }, i * 1000)
+    setTimeout(newScope(i), i * 1000);
   }
 
-  function newScope(i) {
-    console.log(i)
+  function newScope(num) {
+  	return function() {
+    	console.log(num);
+  	};
   }
 }
 timeOutCounter();
@@ -227,10 +239,30 @@ timeOutCounter();
 	#PROBLEM-08
 \******************************************************************************/
 
-var funcArray = [];
+var funcArray = [
+  function return0(){
+		return 0;
+	},
+	function return1(){
+		return 1;
+	},
+	function return2(){
+		return 2;
+	},
+	function return3(){
+		return 3;
+	},
+	function return4(){
+		return 4;
+	},
+	function return5(){
+		return 5;
+	}
+];
 
-/*
-  Make the following code work
+
+
+  // Make the following code work
 
   funcArray[0]() //0
   funcArray[1]() //1
@@ -239,5 +271,4 @@ var funcArray = [];
   funcArray[4]() //4
   funcArray[5]() //5
 
-  *Hint: Don't let this fool you. Break down what's really happening here.
-*/
+  // *Hint: Don't let this fool you. Break down what's really happening here.
